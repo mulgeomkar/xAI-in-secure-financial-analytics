@@ -11,14 +11,35 @@
   --warning: #f59e0b;
 }
 
-body { margin: 0; background: var(--bg-main); color: var(--text-primary); font-family: 'Inter', sans-serif; overflow-x: hidden; }
+/* Light Theme Overrides */
+body.light {
+  --bg-main: #f1f5f9;
+  --bg-card: #ffffff;
+  --bg-input: #f8fafc;
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --border: #cbd5e1;
+}
+
+body { margin: 0; background: var(--bg-main); color: var(--text-primary); font-family: 'Inter', sans-serif; overflow-x: hidden; transition: background 0.3s, color 0.3s; }
 
 .top-nav {
   display: flex; justify-content: space-between; align-items: center;
   padding: 1.5rem 4rem; background: var(--bg-card); border-bottom: 2px solid var(--border);
+  transition: background 0.3s, border-color 0.3s;
 }
+.brand { display: flex; align-items: center; gap: 10px; }
 .brand h1 { font-size: 1.8rem; margin: 0; font-weight: 900; letter-spacing: -1px; }
 .ai-glow { color: var(--accent); text-shadow: 0 0 15px rgba(56, 189, 248, 0.6); }
+
+/* Nav Controls (Status + Toggle) */
+.nav-controls { display: flex; align-items: center; gap: 20px; }
+.theme-toggle {
+  background: transparent; border: 1px solid var(--border); color: var(--text-primary);
+  border-radius: 50%; width: 40px; height: 40px; display: flex; align-items: center; 
+  justify-content: center; cursor: pointer; transition: all 0.3s;
+}
+.theme-toggle:hover { background: var(--bg-input); border-color: var(--accent); }
 
 /* Broadened Browser Proportions */
 .main-content {
@@ -37,28 +58,39 @@ body { margin: 0; background: var(--bg-main); color: var(--text-primary); font-f
 
 .card { 
     background: var(--bg-card); border: 1px solid var(--border); border-radius: 18px; 
-    padding: 30px; box-shadow: 0 15px 40px rgba(0,0,0,0.4); 
+    padding: 30px; box-shadow: 0 15px 40px rgba(0,0,0,0.15); 
+    transition: background 0.3s, border-color 0.3s;
 }
-.highlight-border { border-left: 5px solid var(--accent); background: linear-gradient(90deg, rgba(56, 189, 248, 0.03), transparent); }
 
-/* Form Elements Styling */
+/* Grid Layout for Form Rows */
+.grid-row { display: flex; gap: 20px; }
+.grid-row .form-group { flex: 1; }
+
+/* Form Elements Styling - Updated for Size and Theme Readability */
+.form-group { margin-bottom: 20px; }
 .form-group label { font-size: 0.75rem; text-transform: uppercase; font-weight: 800; color: var(--text-secondary); margin-bottom: 8px; display: block; }
+
 input, select { 
-    background: var(--bg-input); border: 2px solid var(--border); color: white; padding: 15px; 
-    border-radius: 10px; font-size: 1rem; width: 100%; box-sizing: border-box;
+    background: var(--bg-input); border: 2px solid var(--border); 
+    color: var(--text-primary); /* Changed from hardcoded white */
+    padding: 18px 20px; /* Increased padding */
+    border-radius: 10px; font-size: 1.1rem; /* Increased font size */
+    width: 100%; box-sizing: border-box; height: 60px; /* Added explicit height */
+    transition: background 0.3s, border-color 0.3s, color 0.3s;
 }
 input:focus, select:focus { border-color: var(--accent); box-shadow: 0 0 15px rgba(56, 189, 248, 0.2); outline: none; }
 
 /* Enhanced Button Spacing */
 .scan-btn { 
-  width: 100%; background: linear-gradient(135deg, var(--accent), #0284c7); color: #000; 
+  width: 100%; background: linear-gradient(135deg, var(--accent), #0284c7); color: #fff; 
   padding: 20px; font-weight: 900; border-radius: 14px; cursor: pointer; border: none; font-size: 1.1rem;
-  letter-spacing: 1.5px; margin-top: 25px; box-shadow: 0 10px 25px rgba(56, 189, 248, 0.4);
+  letter-spacing: 1.5px; margin-top: 15px; box-shadow: 0 10px 25px rgba(56, 189, 248, 0.4);
 }
 
 /* Visualization Stability */
+.empty-state { text-align: center; color: var(--text-secondary); padding: 50px 0; }
 .narrative-container { min-height: 120px; display: flex; align-items: flex-start; }
-.narrative-text { font-size: 1.1rem; line-height: 1.8; color: #e2e8f0; margin: 0; font-weight: 500; }
+.narrative-text { font-size: 1.1rem; line-height: 1.8; color: var(--text-primary); margin: 0; font-weight: 500; } /* Changed from #e2e8f0 */
 
 .viz-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; margin-bottom: 30px; }
 .gauge-container, .bar-container { position: relative; height: 220px; width: 100%; margin-top: 20px; }
@@ -72,17 +104,24 @@ input:focus, select:focus { border-color: var(--accent); box-shadow: 0 0 15px rg
   display: flex; justify-content: space-between; align-items: center;
   padding: 30px 40px; border-radius: 20px; margin-bottom: 35px; border-left: 8px solid;
 }
+.banner-left { display: flex; align-items: center; gap: 15px; }
+.banner-left h2 { margin: 0; }
+.banner-right h2 { margin: 0; }
+.tiny-label { display: block; font-size: 0.8rem; text-transform: uppercase; opacity: 0.8; margin-bottom: 5px; }
 .low-risk { background: rgba(16, 185, 129, 0.15); border-color: var(--success); color: var(--success); }
 .high-risk { background: rgba(239, 68, 68, 0.15); border-color: var(--danger); color: var(--danger); }
 .glow-text { text-shadow: 0 0 10px currentColor; }
 
 /* Micro-Detailing Animations */
+.engine-status { display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 0.9rem; color: var(--text-secondary); }
+.online { color: var(--success); }
 .pulse-dot { width: 8px; height: 8px; background: var(--success); border-radius: 50%; box-shadow: 0 0 10px var(--success); animation: pulse 2s infinite; }
 @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
 .floating { animation: float 4s ease-in-out infinite; }
 @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
 .spin { animation: rotate 2s linear infinite; }
 @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
 /* Structured Narrative Styling */
 .structured-narrative {
   display: flex;
@@ -104,6 +143,9 @@ input:focus, select:focus { border-color: var(--accent); box-shadow: 0 0 15px rg
   align-items: center;
 }
 
+.summary-header { display: flex; align-items: center; gap: 10px; margin-bottom: 15px; }
+.summary-header h4 { margin: 0; }
+
 /* Color Coding Sections */
 .section-title.summary { color: var(--accent); }
 .section-title.risk { color: var(--danger); }
@@ -118,7 +160,7 @@ input:focus, select:focus { border-color: var(--accent); box-shadow: 0 0 15px rg
 
 .structured-narrative li {
   font-size: 0.95rem;
-  color: #e2e8f0;
+  color: var(--text-primary); /* Changed from hardcoded #e2e8f0 */
   padding: 4px 0;
   display: flex;
   align-items: flex-start;
@@ -140,4 +182,55 @@ input:focus, select:focus { border-color: var(--accent); box-shadow: 0 0 15px rg
 .highlight-border {
   border-left: 5px solid var(--accent);
   background: linear-gradient(90deg, rgba(56, 189, 248, 0.05), transparent);
+}
+
+.technical-footer { display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; color: var(--text-secondary); margin-top: 20px; border-top: 1px solid var(--border); padding-top: 15px; }
+.badge-live { background: rgba(56, 189, 248, 0.15); color: var(--accent); padding: 4px 10px; border-radius: 20px; font-weight: 800; font-size: 0.7rem; }
+
+/* =========================================
+   RESPONSIVE DESIGN (Tablets & Mobile) 
+   ========================================= */
+@media (max-width: 1199px) {
+  .main-content { 
+    grid-template-columns: 1fr; /* Stack layout vertically on tablets */
+    padding: 30px 40px; 
+  }
+}
+
+@media (max-width: 768px) {
+  .top-nav { 
+    flex-direction: column; 
+    gap: 20px; 
+    padding: 1.5rem 20px; 
+    text-align: center; 
+  }
+  .nav-controls {
+    flex-direction: column-reverse; /* Put toggle above or below status */
+    width: 100%;
+    justify-content: center;
+  }
+  .main-content { 
+    padding: 20px 15px; 
+    gap: 20px;
+  }
+  .card { 
+    padding: 20px; 
+  }
+  .grid-row { 
+    flex-direction: column; /* Stack form inputs vertically on mobile */
+    gap: 0; 
+  }
+  .viz-grid { 
+    grid-template-columns: 1fr; /* Stack charts vertically */
+  }
+  .risk-banner {
+    flex-direction: column;
+    gap: 20px;
+    align-items: flex-start;
+  }
+  .technical-footer {
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-start;
+  }
 }

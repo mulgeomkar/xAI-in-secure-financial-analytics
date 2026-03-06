@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ShieldCheck, Zap, Activity, Info, ChevronRight, BrainCircuit, AlertTriangle, CheckCircle, Cpu } from "lucide-react";
+import { ShieldCheck, Zap, Activity, Info, ChevronRight, BrainCircuit, AlertTriangle, CheckCircle, Cpu, Sun, Moon } from "lucide-react";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from "chart.js";
 import { Doughnut, Bar } from "react-chartjs-2";
 import "./App.css";
@@ -33,8 +33,24 @@ function App() {
   const [form, setForm] = useState({ TransactionAmt: "", ProductCD: "W", card4: "visa", card6: "credit", DeviceType: "desktop" });
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
+  
+  // Theme State
+  const [theme, setTheme] = useState("dark");
 
-  const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
+  useEffect(() => {
+    document.body.className = theme;
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme((prevTheme) => (prevTheme === "dark" ? "light" : "dark"));
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    // Prevent negative values for the amount
+    if (name === "TransactionAmt" && value < 0) return; 
+    setForm({ ...form, [name]: value });
+  };
 
   const submit = async (e) => {
     e.preventDefault();
@@ -56,7 +72,6 @@ function App() {
 
   const probPercent = result ? (result.fraud_probability * 100).toFixed(2) : 0;
 
-  // Structured Narrative Logic for Readability
   const getRefinedNarrative = (res) => {
     const sorted = Object.entries(res.shap_values).sort((a, b) => Math.abs(b[1]) - Math.abs(a[1]));
     const probPercent = (res.fraud_probability * 100).toFixed(2);
@@ -108,15 +123,37 @@ function App() {
   return (
     <div className="dashboard-wrapper">
       <nav className="top-nav">
-        <div className="brand">
-            <motion.div animate={{ rotate: loading ? 360 : 0 }} transition={{ repeat: Infinity, duration: 2, ease: "linear" }}>
+        
+        {/* NEW ELLIPTICAL ORBIT ANIMATION CONTAINER */}
+        <div className="brand" style={{ position: "relative", width: "300px", height: "60px", display: "flex", alignItems: "center", justifyContent: "center" }}>
+            <h1 style={{ margin: 0, zIndex: 2, position: "absolute", textAlign: "center", width: "100%" }}>
+              SecureScan <span className="ai-glow">AI</span>
+            </h1>
+            
+            <motion.div
+                style={{ position: "absolute", zIndex: 1 }}
+                animate={loading ? {
+                    // Coordinates map a perfect ellipse around the title text
+                    x: [145, 125, 72, 0, -72, -125, -145, -125, -72, 0, 72, 125, 145],
+                    y: [0, 18, 32, 38, 32, 18, 0, -18, -32, -38, -32, -18, 0],
+                } : {
+                    // Resting position exactly beside the title
+                    x: -130, y: 0
+                }}
+                transition={loading ? { duration: 2.5, repeat: Infinity, ease: "linear" } : { type: "spring", stiffness: 120 }}
+            >
                 <ShieldCheck size={32} color="var(--accent)" />
             </motion.div>
-            <h1>SecureScan <span className="ai-glow">AI</span></h1>
         </div>
-        <div className="status-indicator">
-          {loading ? <span className="analyzing-tag"><Activity size={16} className="spin" /> QUANTUM AUDIT IN PROGRESS...</span> : 
-          <div className="engine-status"><div className="pulse-dot"></div> XAI Engine: <span className="online">Operational</span></div>}
+        
+        <div className="nav-controls">
+          <button onClick={toggleTheme} className="theme-toggle" aria-label="Toggle theme">
+            {theme === "dark" ? <Sun size={20} /> : <Moon size={20} />}
+          </button>
+          <div className="status-indicator">
+            {loading ? <span className="analyzing-tag"><Activity size={16} className="spin" /> QUANTUM AUDIT IN PROGRESS...</span> : 
+            <div className="engine-status"><div className="pulse-dot"></div> XAI Engine: <span className="online">Operational</span></div>}
+          </div>
         </div>
       </nav>
 
@@ -129,7 +166,7 @@ function App() {
           <form onSubmit={submit} className="modern-form">
             <div className="form-group">
               <label>Amount (USD)</label>
-              <input name="TransactionAmt" type="number" step="any" value={form.TransactionAmt} onChange={handleChange} required placeholder="Enter amount..." />
+              <input name="TransactionAmt" type="number" step="any" min="0" value={form.TransactionAmt} onChange={handleChange} required placeholder="Enter amount..." />
             </div>
             <div className="grid-row">
               <div className="form-group">
@@ -195,7 +232,7 @@ function App() {
                         <Doughnut data={{
                             datasets: [{
                                 data: [probPercent, 100 - probPercent],
-                                backgroundColor: [probPercent > 70 ? "#ef4444" : probPercent > 30 ? "#f59e0b" : "#10b981", "#1e293b"],
+                                backgroundColor: [probPercent > 70 ? "#ef4444" : probPercent > 30 ? "#f59e0b" : "#10b981", theme === "light" ? "#e2e8f0" : "#1e293b"],
                                 borderWidth: 0, circumference: 180, rotation: 270, cutout: "85%",
                             }]
                         }} options={{ responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }} />
@@ -216,7 +253,7 @@ function App() {
                               backgroundColor: (c) => c.raw >= 0 ? "#ef4444" : "#10b981",
                               borderRadius: 8,
                           }]
-                      }} options={{ responsive: true, maintainAspectRatio: false, indexAxis: 'y', plugins: { legend: { display: false } }, scales: { x: { display: false }, y: { grid: { display: false }, ticks: { color: '#f8fafc', font: { weight: 'bold' } } } } }} />
+                      }} options={{ responsive: true, maintainAspectRatio: false, indexAxis: 'y', plugins: { legend: { display: false } }, scales: { x: { display: false }, y: { grid: { display: false }, ticks: { color: theme === 'light' ? '#0f172a' : '#f8fafc', font: { weight: 'bold' } } } } }} />
                     </div>
                   </div>
                 </div>
