@@ -14,7 +14,7 @@ backend/.env/
 *.h5
 *.pt
 *.pth
-*.pkl
+# *.pkl (uncommented to allow preprocessor.pkl)
 *.joblib
 
 # Node
