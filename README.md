@@ -70,13 +70,7 @@ SecureScan AI is a fraud detection dashboard that does not just predict fraud—
 
 ---
 
-## API Documentation
 
-Once backend is running, visit:
-- **Swagger UI:** http://localhost:8000/docs
-- **ReDoc:** http://localhost:8000/redoc
-
----
 
 ## Project Structure
 
