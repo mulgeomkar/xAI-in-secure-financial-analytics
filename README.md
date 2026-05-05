@@ -1,181 +1,132 @@
-🛡️ SecureScan AI — Explainable Fraud Detection
------------------------------------------------
+﻿# SecureScan AI - Explainable Fraud Detection
 
+Real-time fraud detection with transparent AI. Combines XGBoost machine learning with SHAP explainability to show exactly why a transaction is flagged as fraud.
 
-📌 Overview
-------------
-SecureScan AI is a high-fidelity fraud detection dashboard that uses Explainable Artificial Intelligence (XAI) to bridge the gap between complex machine learning predictions and human understanding.
+---
 
-Instead of just telling whether a transaction is fraud, the system explains why it is fraud.
+## What is SecureScan AI?
 
-By integrating XGBoost with SHAP (SHapley Additive exPlanations), the platform produces interpretable AI decisions that analysts, banks, and compliance teams can trust.
+SecureScan AI is a fraud detection dashboard that does not just predict fraud—it explains why. Using XGBoost for prediction and SHAP for interpretability, analysts and compliance teams get trustworthy, transparent fraud detection.
 
-🚀 Key Features
-----------------
+**Key Insight:** Instead of a black-box "fraud/safe" verdict, you see which factors contributed to the decision.
 
-Real-time Risk Audit
+---
 
-Instantly evaluates transactions
+## Features
 
-Displays fraud probability meter
+- **Real-Time Risk Audit** - Instantly evaluates transactions with fraud probability meter
+- **Explainable Predictions** - Shows human-readable reasons for fraud flags
+- **SHAP Visualizations** - Interactive charts showing feature contributions
+- **Dark-Mode Dashboard** - Clean, responsive UI with smooth animations
+- **Modern Stack** - FastAPI backend + React frontend with Vite
 
-Provides a clear verdict banner (Safe / Suspicious / Fraud)
+---
 
-🧠 Explainable Narratives
---------------------------
+## Tech Stack
 
-Converts ML reasoning into human-readable explanations
+### Backend
+- Python 3.13
+- FastAPI (REST API)
+- XGBoost (ML model)
+- SHAP (Explainability)
+- Pandas & Scikit-Learn (Data processing)
 
-Example:
+### Frontend
+- React 19 + Vite
+- Material-UI Components
+- Chart.js (Visualizations)
+- Framer Motion (Animations)
 
-“Transaction amount deviated significantly from user's normal spending pattern.”
+---
 
-📊 SHAP Visualizations
------------------------
+## Quick Start
 
-Interactive feature contribution graphs
+### Terminal 1 - Backend
 
-Shows mathematical push & pull behind predictions
-
-Analysts can see which factor caused the fraud flag
-
-🧩 Modern XAI Architecture
----------------------------
-
-FastAPI Python backend
-
-React + Vite frontend dashboard
-
-End-to-end explainable ML pipeline
-
-🌙 Responsive Dark-Mode UI
-
-Micro-animations
-
-Optimized for large screens & dashboards
-
-🛠️ Tech Stack
-
--------------
-Backend
--------
-
-🐍 Python
-
-⚡ FastAPI
-
-🌲 XGBoost (Fraud Classification)
-
-🔎 SHAP (Explainable AI)
-
-📦 Joblib
-
-🐼 Pandas
-
-🧪 Scikit-Learn Pipeline
-
-Frontend
----------
-⚛️ React (Vite)
-
-🎞️ Framer Motion
-
-📈 Chart.js
-
-🎨 Lucide React Icons
-
-🌑 Dark UI Dashboard
-
-🏗️ System Architecture
------------------------
-The system follows a 4-stage intelligent pipeline:
-
-Input
-
-User enters transaction details
-(Amount, Time, Network, Device, Location, Merchant)
-
-Processing
-
-FastAPI cleans and transforms data
-
-Scikit-Learn preprocessing pipeline applied
-
-Inference
-
-XGBoost predicts fraud probability
-
-Explanation
-
-SHAP calculates feature contribution
-
-React dashboard visualizes reasoning
-
-📥 Installation
-1️⃣ Clone Repository
-git clone (https://github.com/SMARANVELPULA/explainable-AI-in-secure-financial-analytics)
-cd securescan-ai
-2️⃣ Backend Setup
+```powershell
 cd backend
+python -m venv .venv
+.venv\Scripts\Activate.ps1
 pip install -r requirements.txt
-uvicorn app:app --reload
+python -m uvicorn app:app --reload --host 0.0.0.0 --port 8000
+```
 
-Backend will run at:
+**Backend URL:** http://localhost:8000
 
-http://127.0.0.1:8000
-3️⃣ Frontend Setup
+### Terminal 2 - Frontend
+
+```powershell
 cd frontend
 npm install
 npm run dev
+```
 
-Frontend will run at:
+**Frontend URL:** http://localhost:5173
 
-http://localhost:5173
-📊 How the Model Makes Decisions
+---
 
-SecureScan AI does not behave like a black-box model.
+## How It Works
 
-For every transaction, SHAP computes the contribution score of each feature:
+1. **Input** - User enters transaction details (amount, device, merchant, location)
+2. **Process** - Data cleaned and transformed by Scikit-Learn pipeline
+3. **Predict** - XGBoost model predicts fraud probability
+4. **Explain** - SHAP calculates which features pushed the prediction up or down
+5. **Display** - React dashboard visualizes the explanation
 
-Feature	Effect
-High Transaction Amount	Increases fraud probability
-Known Device	Decreases fraud probability
-New Location	Increases fraud probability
-Frequent Merchant	Decreases fraud probability
+### Example: Feature Impact
 
-The dashboard visualizes this using bar graphs and explanation reports.
+| Factor | Impact |
+|--------|--------|
+| High Amount | Increases Fraud Risk |
+| New Location | Increases Fraud Risk |
+| Known Device | Decreases Fraud Risk |
+| Trusted Merchant | Decreases Fraud Risk |
 
-🎯 Use Cases
+---
 
-Banking & FinTech fraud monitoring
+## Use Cases
 
-Payment gateway transaction auditing
+- Banking & FinTech fraud monitoring
+- Payment gateway auditing
+- Compliance & regulatory reporting
+- Explainable AI research
+- Risk analyst dashboards
 
-Compliance & regulatory analytics
+---
 
-Cybersecurity risk analysis
+## API Documentation
 
-Explainable AI research demonstrations
+Once backend is running, visit:
+- **Swagger UI:** http://localhost:8000/docs
+- **ReDoc:** http://localhost:8000/redoc
 
-👤 Author
-----------
-**Smaran Velpula
-Computer Science Engineering (Data Science)
-Ace Engineering College**
+---
 
-💻 Web Development
+## Project Structure
 
-📊 Data Analytics
+```
+explainable-AI-in-secure-financial-analytics/
+├── backend/
+│   ├── app.py              # FastAPI server
+│   ├── requirements.txt    # Python dependencies
+│   └── xgboost_model.json  # Trained model
+├── frontend/
+│   ├── src/
+│   │   ├── App.jsx         # Main component
+│   │   └── main.jsx        # Entry point
+│   ├── package.json        # NPM dependencies
+│   └── vite.config.js      # Vite config
+└── README.md
+```
 
-🤖 Machine Learning & Explainable AI
+---
 
+## Contributing
 
-⭐ Support
+Contributions are welcome! Feel free to open issues or submit PRs.
 
-If you found this project useful:
+---
 
-Star ⭐ the repository
+## License
 
-Share with friends
-
-Use it in research / college projects
+MIT License
