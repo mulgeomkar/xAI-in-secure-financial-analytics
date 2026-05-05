@@ -1,4 +1,4 @@
-﻿# SecureScan AI - Explainable Fraud Detection
+﻿# EXPLAINABLE AI FOR SECURE ANALYTICS IN FINANCIAL SECTORS
 
 Real-time fraud detection with transparent AI. Combines XGBoost machine learning with SHAP explainability to show exactly why a transaction is flagged as fraud.
 
