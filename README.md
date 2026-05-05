@@ -39,31 +39,7 @@ SecureScan AI is a fraud detection dashboard that does not just predict fraud—
 
 ---
 
-## Quick Start
 
-### Terminal 1 - Backend
-
-```powershell
-cd backend
-python -m venv .venv
-.venv\Scripts\Activate.ps1
-pip install -r requirements.txt
-python -m uvicorn app:app --reload --host 0.0.0.0 --port 8000
-```
-
-**Backend URL:** http://localhost:8000
-
-### Terminal 2 - Frontend
-
-```powershell
-cd frontend
-npm install
-npm run dev
-```
-
-**Frontend URL:** http://localhost:5173
-
----
 
 ## How It Works
 
@@ -119,14 +95,7 @@ explainable-AI-in-secure-financial-analytics/
 └── README.md
 ```
 
----
 
-## Contributing
 
-Contributions are welcome! Feel free to open issues or submit PRs.
 
----
 
-## License
-
-MIT License
